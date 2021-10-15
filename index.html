@@ -97,30 +97,40 @@
     <div id="Logo"></div>
     <div id="fb-root"></div>
 
-    <fb:login-button
-      show-faces="false"
-      perms="user_hometown,user_about_me,email,user_address"
-      autologoutlink="true"
-      width="200"
-      max-rows="1"
-    ></fb:login-button>
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+    </fb:login-button>
 
-    <button onclick="getData()">getData</button>
-    <!-- put this before the end body tag -->
-    <script src="https://connect.facebook.net/en_US/all.js"></script>
     <script>
-      FB.init({
-        appId: "411669310580952",
-        status: true, // check login status
-        cookie: true, // enable cookies to allow the server to access the session
-        xfbml: true, // parse XFBML
-        oauth: true, // enable OAuth 2.0
-      });
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "411669310580952",
+          cookie: true,
+          xfbml: true,
+          version: "v12.0",
+        });
+
+        FB.AppEvents.logPageView();
+      };
+
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
     </script>
     <script>
-      function getData() {
-        FB.api("/me", function (response) {
-          console.log(response);
+      FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+      });
+      function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+          statusChangeCallback(response);
         });
       }
     </script>
