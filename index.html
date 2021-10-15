@@ -95,23 +95,36 @@
     <div id="name"></div>
     <div id="Email"></div>
     <div id="Logo"></div>
-    <div
-      class="fb-login-button"
-      data-width=""
-      data-size="large"
-      data-button-type="continue_with"
-      data-layout="rounded"
-      data-auto-logout-link="false"
-      data-use-continue-as="false"
-    ></div>
     <div id="fb-root"></div>
-    <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v12.0&appId=411669310580952&autoLogAppEvents=1"
-      nonce="0gvNvPfQ"
-    ></script>
+
+    <fb:login-button
+      show-faces="false"
+      perms="user_hometown,user_about_me,email,user_address"
+      autologoutlink="true"
+      width="200"
+      max-rows="1"
+    ></fb:login-button>
+
+    <button onclick="getData()">getData</button>
+    <!-- put this before the end body tag -->
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script>
+      FB.init({
+        appId: "411669310580952",
+        status: true, // check login status
+        cookie: true, // enable cookies to allow the server to access the session
+        xfbml: true, // parse XFBML
+        channelURL: "https://johansbg.github.io/TestButtons/", // channel.html file
+        oauth: true, // enable OAuth 2.0
+      });
+    </script>
+    <script>
+      function getData() {
+        FB.api("/me", function (response) {
+          console.log(response);
+        });
+      }
+    </script>
     <script>
       startApp();
     </script>
