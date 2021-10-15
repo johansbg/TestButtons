@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script>
+      var googleUser = {};
+      var startApp = function () {
+        gapi.load("auth2", function () {
+          // Retrieve the singleton for the GoogleAuth library and set up the client.
+          auth2 = gapi.auth2.init({
+            client_id:
+              "211887201599-s9ds5trin7gib39savohk73nrus1l8el.apps.googleusercontent.com",
+            cookiepolicy: "single_host_origin",
+            // Request scopes in addition to 'profile' and 'email'
+            //scope: 'additional_scope'
+          });
+          attachSignin(document.getElementById("customBtn"));
+        });
+      };
+
+      function attachSignin(element) {
+        console.log(element.id);
+        auth2.attachClickHandler(
+          element,
+          {},
+          function (googleUser) {
+            document.getElementById("idG").innerText =
+              "Id: " + googleUser.getBasicProfile().getId();
+            document.getElementById("name").innerText =
+              "Signed in: " + googleUser.getBasicProfile().getName();
+            document.getElementById("Email").innerText =
+              "Email: " + googleUser.getBasicProfile().getEmail();
+            document.getElementById("Logo").innerText =
+              "Potho: " + googleUser.getBasicProfile().getImageUrl();
+          },
+          function (error) {
+            alert(JSON.stringify(error, "HOLA", 2));
+          }
+        );
+      }
+    </script>
+    <style type="text/css">
+      #customBtn {
+        display: inline-block;
+        background: white;
+        color: #444;
+        width: 190px;
+        border-radius: 5px;
+        border: thin solid #888;
+        box-shadow: 1px 1px 1px grey;
+        white-space: nowrap;
+      }
+      #customBtn:hover {
+        cursor: pointer;
+      }
+      span.label {
+        font-family: serif;
+        font-weight: normal;
+      }
+      span.icon {
+        background: url("/identity/sign-in/g-normal.png") transparent 5px 50%
+          no-repeat;
+        display: inline-block;
+        vertical-align: middle;
+        width: 42px;
+        height: 42px;
+      }
+      span.buttonText {
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 42px;
+        padding-right: 42px;
+        font-size: 14px;
+        font-weight: bold;
+        /* Use the Roboto font that is loaded in the <head> */
+        font-family: "Roboto", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- In the callback, you would hide the gSignInWrapper element on a
+  successful sign in -->
+    <div id="gSignInWrapper">
+      <span class="label">Sign in with:</span>
+      <div id="customBtn" class="customGPlusSignIn">
+        <span class="icon"></span>
+        <span class="buttonText">Google</span>
+      </div>
+    </div>
+    <div id="idG"></div>
+    <div id="name"></div>
+    <div id="Email"></div>
+    <div id="Logo"></div>
+    <div
+      class="fb-login-button"
+      data-width=""
+      data-size="large"
+      data-button-type="continue_with"
+      data-layout="rounded"
+      data-auto-logout-link="false"
+      data-use-continue-as="false"
+    ></div>
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v12.0&appId=411669310580952&autoLogAppEvents=1"
+      nonce="0gvNvPfQ"
+    ></script>
+    <script>
+      startApp();
+    </script>
+  </body>
+</html>
