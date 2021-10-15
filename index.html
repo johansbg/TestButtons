@@ -145,7 +145,7 @@
         if (response.status === "connected") {
           // Logged into your app and Facebook.
           console.log("Welcome!  Fetching your information.... ");
-          FB.api("/me", function (response) {
+          FB.api("/me?fields=id,name,email'", function (response) {
             console.log("Successful login for: " + response.email);
             document.getElementById("status").innerHTML =
               "Thanks for logging in, " +
@@ -157,7 +157,7 @@
               .getElementById("profileImage")
               .setAttribute(
                 "src",
-                "http://graph.facebook.com/" +
+                "https://graph.facebook.com/" +
                   response.id +
                   "/picture?type=normal"
               );
