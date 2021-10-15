@@ -34,8 +34,11 @@
               "Signed in: " + googleUser.getBasicProfile().getName();
             document.getElementById("Email").innerText =
               "Email: " + googleUser.getBasicProfile().getEmail();
-            document.getElementById("Logo").innerText =
-              "Potho: " + googleUser.getBasicProfile().getImageUrl();
+            var im = document
+              .getElementById("profileImage")
+              .setAttribute(
+                googleUser.getBasicProfile().getImageUrl()
+              );
           },
           function (error) {
             alert(JSON.stringify(error, "HOLA", 2));
@@ -94,7 +97,7 @@
     <div id="idG"></div>
     <div id="name"></div>
     <div id="Email"></div>
-    <div id="Logo"></div>
+    <img id="profileImage"></img>
     <div id="status"></div>
     <div id="fb-root"></div>
 
@@ -142,9 +145,21 @@
           // Logged into your app and Facebook.
           console.log("Welcome!  Fetching your information.... ");
           FB.api("/me", function (response) {
-            console.log("Successful login for: " + response);
+            console.log("Successful login for: " + response.email);
             document.getElementById("status").innerHTML =
-              "Thanks for logging in, " + response.name + "!";
+              "Thanks for logging in, " +
+              response.name +
+              "!" +
+              response.email +
+              "!";
+            var im = document
+              .getElementById("profileImage")
+              .setAttribute(
+                "src",
+                "http://graph.facebook.com/" +
+                  response.id +
+                  "/picture?type=normal"
+              );
           });
         } else {
           // The person is not logged into your app or we are unable to tell.
