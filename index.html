@@ -16,7 +16,7 @@
               "211887201599-s9ds5trin7gib39savohk73nrus1l8el.apps.googleusercontent.com",
             cookiepolicy: "single_host_origin",
             // Request scopes in addition to 'profile' and 'email'
-            //scope: 'additional_scope'
+            scope: 'additional_scope'
           });
           attachSignin(document.getElementById("customBtn"));
         });
@@ -89,7 +89,7 @@
     <!-- In the callback, you would hide the gSignInWrapper element on a
   successful sign in -->
     <div id="gSignInWrapper">
-      <span class="label">Sign in with:</span>
+      <span class="label">Inicia Sesion Con:</span>
       <div id="customBtn" class="customGPlusSignIn">
         <span class="icon"></span>
         <span class="buttonText">Google</span>
@@ -100,76 +100,78 @@
     <div id="Email"></div>
     <img id="profileImage"></img>
     <div id="status"></div>
-    <div id="fb-root"></div>
 
-        <script>
-        window.fbAsyncInit = function() {
-                FB.init({
-                appId: '411669310580952',
-                status: true,
-                cookie: true,
-                xfbml: true
-            });
-        };
+    <script>
+    window.fbAsyncInit = function() {
+            FB.init({
+            appId: '411669310580952',
+            status: true,
+            cookie: true,
+            xfbml: true
+        });
+    };
 
-        // Load the SDK asynchronously
-        (function(d){
-        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement('script'); js.id = id; js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        ref.parentNode.insertBefore(js, ref);
-        }(document));
+    // Load the SDK asynchronously
+    (function(d){
+    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); js.id = id; js.async = true;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
+    }(document));
 
-        function login() {
-            FB.login(function(response) {
+    function login() {
+        FB.login(function(response) {
 
-            // handle the response
-            console.log("Response goes here!");
-            if (response.status === "connected") {
-              // Logged into your app and Facebook.
-              console.log("Welcome!  Fetching your information.... ");
-              FB.api("/me",{ fields: 'id, name, email' }, function (response2) {
-                console.log("Successful login for: " + response2.email);
-                document.getElementById("status").innerHTML =
-                  "Thanks for logging in, " +
-                  response2.name +
-                  "!" +
-                  response2.email +
-                  "!";
-                var im = document
-                  .getElementById("profileImage")
-                  .setAttribute(
-                    "src",
-                    "https://graph.facebook.com/" +
-                        response2.id +
-                      "/picture?type=normal"
-                  );
-              });
-            } else {
-              // The person is not logged into your app or we are unable to tell.
-              document.getElementById("status").innerHTML =
-                "Please log " + "into this app.";
-            }
-            });            
+        // handle the response
+        console.log("Response goes here!");
+        if (response.status === "connected") {
+          // Logged into your app and Facebook.
+          console.log("Welcome!  Fetching your information.... ");
+          FB.api("/me",{ fields: 'id, name, email' }, function (response2) {
+            console.log("Successful login for: " + response2.email);
+            document.getElementById("status").innerHTML =
+              "Thanks for logging in, " +
+              response2.name +
+              "!" +
+              response2.email +
+              "!";
+            var im = document
+              .getElementById("profileImage")
+              .setAttribute(
+                "src",
+                "https://graph.facebook.com/" +
+                    response2.id +
+                  "/picture?type=normal"
+              );
+          });
+        } else {
+          // The person is not logged into your app or we are unable to tell.
+          document.getElementById("status").innerHTML =
+            "Please log " + "into this app.";
         }
+        });            
+    }
 
-        function logout() {
-            FB.logout(function(response) {
-              // user is now logged out
-            });
-            /*var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });*/
-        }
+    function logout() {
+        FB.logout(function(response) {
+          // user is now logged out
+          FB.Auth.setAuthResponse(null, 'unknown');
+          console.log('CERRO');
+        });
+        /*var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });*/
+    }
 
-        </script>
+    </script>
+    <script>startApp();</script>
 
-        <button onclick="javascript:login();">Login Facebook</button>
+    <button onclick="javascript:login();">Login Facebook</button>
 
-        <br>
+    <br>
 
-        <button onclick="javascript:logout();">Logout from Facebook</button>
+    <button onclick="javascript:logout();">Logout from Facebook</button>
   </body>
 </html>
