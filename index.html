@@ -89,7 +89,7 @@
     <!-- In the callback, you would hide the gSignInWrapper element on a
   successful sign in -->
     <div id="gSignInWrapper">
-      <span class="label">Inicia Sesion Con:</span>
+      <span class="label">Sign in with:</span>
       <div id="customBtn" class="customGPlusSignIn">
         <span class="icon"></span>
         <span class="buttonText">Google</span>
@@ -157,8 +157,6 @@
         function logout() {
             FB.logout(function(response) {
               // user is now logged out
-              FB.Auth.setAuthResponse(null, 'unknown');
-              console.log('CERRO');
             });
             /*var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
