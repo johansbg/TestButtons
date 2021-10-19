@@ -151,7 +151,7 @@
               document.getElementById("status").innerHTML =
                 "Please log " + "into this app.";
             }
-            }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
+            });            
         }
 
         function logout() {
@@ -159,9 +159,9 @@
               // user is now logged out
             });
             var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
+           /* auth2.signOut().then(function () {
                 console.log('User signed out.');
-            });
+            });*/
         }
 
         var status = FB.getLoginStatus();
