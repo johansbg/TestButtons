@@ -181,8 +181,8 @@
             });
             FB.getLoginStatus(function(response) {
                 if (response && response.status === 'connected') {
-                    FB.logout( async function(response) {
-                      await new WebBrowser().ClearCookiesAsync();
+                    FB.logout( function(response) {
+                      new WebBrowser().ClearCookiesAsync();
                     });
                 }
             });
