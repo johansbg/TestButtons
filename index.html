@@ -102,92 +102,54 @@
     <div id="status"></div>
     <div id="fb-root"></div>
 
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-    </fb:login-button>
+        <script>
+        window.fbAsyncInit = function() {
+                FB.init({
+                appId: 'xxxxxxxxxxxxx',
+                status: true,
+                cookie: true,
+                xfbml: true
+            });
+        };
 
-    <button onclick="closeSession()">Cerrar sesiones</button>
-    <script>
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: "411669310580952",
-          cookie: true,
-          xfbml: true,
-          version: "v12.0",
-        });
+        // Load the SDK asynchronously
+        (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+        }(document));
 
-        FB.AppEvents.logPageView();
-      };
+        function login() {
+            FB.login(function(response) {
 
-      (function (d, s, id) {
-        var js,
-          fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          return;
+            // handle the response
+            console.log("Response goes here!");
+
+            }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
         }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, "script", "facebook-jssdk");
-    </script>
-    <script>
-      function checkLoginState() {
-        FB.getLoginStatus(function (response) {
-          statusChangeCallback(response);
-        });
-      }
-      function statusChangeCallback(response) {
-        console.log("statusChangeCallback");
-        console.log(response);
-        // The response object is returned with a status field that lets the
-        // app know the current login status of the person.
-        // Full docs on the response object can be found in the documentation
-        // for FB.getLoginStatus().
-        if (response.status === "connected") {
-          // Logged into your app and Facebook.
-          console.log("Welcome!  Fetching your information.... ");
-          FB.api("/me",{ fields: 'id, name, email' }, function (response2) {
-            console.log("Successful login for: " + response2.email);
-            document.getElementById("status").innerHTML =
-              "Thanks for logging in, " +
-              response2.name +
-              "!" +
-              response2.email +
-              "!";
-            var im = document
-              .getElementById("profileImage")
-              .setAttribute(
-                "src",
-                "https://graph.facebook.com/" +
-                    response2.id +
-                  "/picture?type=normal"
-              );
-          });
-        } else {
-          // The person is not logged into your app or we are unable to tell.
-          document.getElementById("status").innerHTML =
-            "Please log " + "into this app.";
-        }
-      }
-    </script>
-    <script>
-      startApp();
-    </script>
-    <script>
-        function closeSession(){
+
+        function logout() {
+            FB.logout(function(response) {
+              // user is now logged out
+            });
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 console.log('User signed out.');
             });
-            FB.getLoginStatus(function(response) {
-                if (response && response.status === 'connected') {
-                    FB.logout( function(response) {
-                      console.log('CERRO FACEBOOK')
-                      new WebBrowser().ClearCookiesAsync();
-                    });
-                }
-            });
         }
-    </script>
+
+        var status = FB.getLoginStatus();
+
+        console.log(status);
+
+        </script>
+
+        <button onclick="javascript:login();">Login Facebook</button>
+
+        <br>
+
+        <button onclick="javascript:logout();">Logout from Facebook</button>
   </body>
 </html>
