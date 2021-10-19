@@ -179,9 +179,12 @@
             auth2.signOut().then(function () {
                 console.log('User signed out.');
             });
-            FB.logout(function(response) {
-              // user is now logged out
-              console.log('Cerro')
+            FB.getLoginStatus(function(response) {
+                if (response && response.status === 'connected') {
+                    FB.logout(function(response) {
+                        document.location.reload();
+                    });
+                }
             });
         }
     </script>
