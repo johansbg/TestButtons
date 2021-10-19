@@ -105,7 +105,7 @@
         <script>
         window.fbAsyncInit = function() {
                 FB.init({
-                appId: 'xxxxxxxxxxxxx',
+                appId: '411669310580952',
                 status: true,
                 cookie: true,
                 xfbml: true
@@ -126,7 +126,31 @@
 
             // handle the response
             console.log("Response goes here!");
-
+            if (response.status === "connected") {
+              // Logged into your app and Facebook.
+              console.log("Welcome!  Fetching your information.... ");
+              FB.api("/me",{ fields: 'id, name, email' }, function (response2) {
+                console.log("Successful login for: " + response2.email);
+                document.getElementById("status").innerHTML =
+                  "Thanks for logging in, " +
+                  response2.name +
+                  "!" +
+                  response2.email +
+                  "!";
+                var im = document
+                  .getElementById("profileImage")
+                  .setAttribute(
+                    "src",
+                    "https://graph.facebook.com/" +
+                        response2.id +
+                      "/picture?type=normal"
+                  );
+              });
+            } else {
+              // The person is not logged into your app or we are unable to tell.
+              document.getElementById("status").innerHTML =
+                "Please log " + "into this app.";
+            }
             }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
         }
 
