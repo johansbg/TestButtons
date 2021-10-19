@@ -179,6 +179,10 @@
             auth2.signOut().then(function () {
                 console.log('User signed out.');
             });
+            FB.logout(function(response) {
+              // user is now logged out
+              console.log('Cerro')
+            });
         }
     </script>
   </body>
