@@ -157,9 +157,11 @@
         function logout() {
             FB.logout(function(response) {
               // user is now logged out
+              FB.Auth.setAuthResponse(null, 'unknown');
+              console.log('CERRO');
             });
-            var auth2 = gapi.auth2.getAuthInstance();
-           /* auth2.signOut().then(function () {
+            /*var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
                 console.log('User signed out.');
             });*/
         }
